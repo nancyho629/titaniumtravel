@@ -3,6 +3,7 @@ import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import { Redirect, withRouter, Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
+import messages from '../AutoDismissAlert/messages'
 
 const Trip = ({ user, alert, match }) => {
   console.log(match)
@@ -18,16 +19,31 @@ const Trip = ({ user, alert, match }) => {
       }
     })
       .then(responseData => setTrip(responseData.data.trip))
-      .then(console.log(trip))
-      .catch(console.error)
+      .catch(() => alert({
+        heading: 'Show Failed',
+        message: messages.showFailure,
+        variant: 'danger'
+      }))
   }, [])
   const destroy = () => {
     axios({
       url: `${apiUrl}/trips/${match.params.id}`,
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Token token=${user.token}`
+      }
     })
       .then(() => setDeleted(true))
-      .catch(console.error)
+      .then(() => alert({
+        heading: 'Delete Success',
+        message: messages.deleteSuccess,
+        variant: 'success'
+      }))
+      .catch(() => alert({
+        heading: 'Delete Failed',
+        message: messages.deleteFailure,
+        variant: 'danger'
+      }))
   }
   if (!trip) {
     return <p> Loading... </p>
@@ -35,13 +51,14 @@ const Trip = ({ user, alert, match }) => {
 
   if (deleted) {
     return <Redirect to={
-      { pathname: '/', state: { msg: 'Trip successfully deleted' } }
+      { pathname: '/trips', state: { msg: 'Trip successfully deleted' } }
     } />
   }
   return (
     <div>
       <h1>Trip</h1>
-      {trip.title}
+      <h4>{trip.location}</h4>
+      <h4>{trip.description}</h4>
       <Link to="/trips">Back to all trips</Link>
       <Button href={`#/trips/${match.params.id}/edit`} >Edit this trip</Button>
       <Button onClick={destroy}>Delete Trip</Button>

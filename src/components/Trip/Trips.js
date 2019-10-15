@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import { Link, withRouter } from 'react-router-dom'
+import messages from '../AutoDismissAlert/messages'
 
 const Trips = ({ user, alert }) => {
   const [trips, setTrips] = useState([])
@@ -16,7 +17,16 @@ const Trips = ({ user, alert }) => {
       }
     })
       .then(responseData => setTrips(responseData.data.trips))
-      .catch(console.error)
+      // .then(() => alert({
+      //   heading: 'Get Success',
+      //   message: messages.getSuccess,
+      //   variant: 'success'
+      // }))
+      .catch(() => alert({
+        heading: 'Get Failed',
+        message: messages.getFailure,
+        variant: 'danger'
+      }))
   }, [])
 
   const tripsJsx = trips.map(trip => (
