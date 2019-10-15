@@ -8,7 +8,11 @@ import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
-import Home from '../Trip/TripHome'
+import Trips from '../Trip/Trips'
+import Trip from '../Trip/Trip'
+import TripCreate from '../Trip/TripCreate'
+import TripEdit from '../Trip/TripEdit'
+import TripHome from '../Trip/TripHome'
 
 class App extends Component {
   constructor () {
@@ -43,6 +47,9 @@ class App extends Component {
           />
         ))}
         <main className="container">
+          <Route exact path='/' render={() => (
+            <TripHome />
+          )} />
           <Route path='/sign-up' render={() => (
             <SignUp alert={this.alert} setUser={this.setUser} />
           )} />
@@ -55,9 +62,39 @@ class App extends Component {
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword alert={this.alert} user={user} />
           )} />
-          <AuthenticatedRoute user={user} path='/' render={() => (
-            <Home />
+          <AuthenticatedRoute user={user} exact path='/trips' render={() => (
+            <Trips alert={this.alert} user={user} />
           )} />
+          <AuthenticatedRoute
+            user={user}
+            exact path='/trips/:id'
+            render={() => (
+              <Trip
+                user={user}
+                alert={this.alert}
+              />
+            )}
+          />
+          <AuthenticatedRoute
+            user={user}
+            path='/create-trip'
+            render={() => (
+              <TripCreate
+                user={user}
+                alert={this.alert}
+              />
+            )}
+          />
+          <AuthenticatedRoute
+            user={user}
+            path='/trips/:id/edit'
+            render={() => (
+              <TripEdit
+                user={user}
+                alert={this.alert}
+              />
+            )}
+          />
         </main>
       </Fragment>
     )

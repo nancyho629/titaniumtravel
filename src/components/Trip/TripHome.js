@@ -1,9 +1,10 @@
 import React from 'react'
 
 const Home = () => (
-
-  <h4>Welcome to your trips!</h4>
-
+  <div>
+    <h4>Welcome to your Titanium Travel!</h4>
+    <p>The place to keep track of where you want to go!</p>
+  </div>
 )
 
 export default Home
