@@ -26,7 +26,6 @@ const TripForm = ({ trip, handleChange, handleSubmit }) => {
           name="description"
           onChange={handleChange}
           value={trip.description}
-          required
         />
       </Form.Group>
       <Button variant="primary" type="submit">Submit</Button>
