@@ -3,7 +3,7 @@ import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import ActivityForm from './ActivityForm'
 import { withRouter } from 'react-router-dom'
-// import messages from '../AutoDismissAlert/messages'
+import messages from '../AutoDismissAlert/messages'
 
 const ActivityEdit = ({ user, alert, match, history }) => {
   const [activity, setActivity] = useState({ activity: '', date: '', description: '' })
@@ -26,7 +26,11 @@ const ActivityEdit = ({ user, alert, match, history }) => {
           ...res.data.activity, date: formattedDate
         })
       })
-      .catch(console.error)
+      .catch(() => alert({
+        heading: 'Danger',
+        message: messages.showFailure,
+        variant: 'danger'
+      }))
   }, [])
 
   const handleChange = event => {
@@ -45,14 +49,9 @@ const ActivityEdit = ({ user, alert, match, history }) => {
       },
       data: { activity }
     })
-      .then(() => alert({ heading: 'Success', message: 'You updated a trip!', variant: 'success' }))
+      .then(() => alert({ heading: 'Success', message: 'You updated the activity!', variant: 'success' }))
       .then(() => history.push(`/trips/${match.params.id}/activities/${match.params.aid}`))
-      // .then(() => alert({
-      //   heading: 'Update Success',
-      //   message: messages.updateSuccess,
-      //   variant: 'success'
-      // }))
-      .catch(() => alert({ heading: 'Danger', message: 'You did not update a trip!', variant: 'danger' }))
+      .catch(() => alert({ heading: 'Danger', message: 'You did not update the activity!', variant: 'danger' }))
   }
 
   return (

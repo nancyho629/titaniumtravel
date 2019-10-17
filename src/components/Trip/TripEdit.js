@@ -30,7 +30,11 @@ const TripEdit = ({ user, alert, match, history }) => {
           ...res.data.trip, startDate: formattedStartDate, endDate: formattedEndDate
         })
       })
-      .catch(console.error)
+      .catch(() => alert({
+        heading: 'Danger',
+        message: messages.showFailure,
+        variant: 'danger'
+      }))
   }, [])
 
   const handleChange = event => {
@@ -49,14 +53,9 @@ const TripEdit = ({ user, alert, match, history }) => {
       },
       data: { trip }
     })
-      .then(() => alert({ heading: 'Success', message: 'You updated a trip!', variant: 'success' }))
+      .then(() => alert({ heading: 'Success', message: 'You updated the trip!', variant: 'success' }))
       .then(() => history.push(`/trips/${match.params.id}`))
-      .then(() => alert({
-        heading: 'Update Success',
-        message: messages.updateSuccess,
-        variant: 'success'
-      }))
-      .catch(() => alert({ heading: 'Danger', message: 'You did not update a trip!', variant: 'danger' }))
+      .catch(() => alert({ heading: 'Danger', message: 'You did not update the trip!', variant: 'danger' }))
   }
 
   return (

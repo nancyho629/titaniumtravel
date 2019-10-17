@@ -3,7 +3,7 @@ import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import { Link, withRouter } from 'react-router-dom'
 import messages from '../AutoDismissAlert/messages'
-import { Card, Grid, CardContent, Typography, CardActionArea, CardMedia } from '@material-ui/core'
+import { Card, Grid, CardContent, Typography, CardActionArea } from '@material-ui/core'
 const moment = require('moment')
 
 const Trips = ({ user, alert }) => {
@@ -17,10 +17,21 @@ const Trips = ({ user, alert }) => {
         'Authorization': `Token token=${user.token}` // `Bearer ${user.token}`
       }
     })
-      .then(responseData => setTrips(responseData.data.trips))
+      .then(responseData => {
+        setTrips(responseData.data.trips)
+        return responseData
+      })
+      .then((responseData) => {
+        if (responseData.data.trips.length === 0) {
+          alert({
+            heading: 'Danger',
+            message: 'No trips!',
+            variant: 'danger' })
+        }
+      })
       .catch(() => alert({
-        heading: 'Get Failed',
-        message: messages.getFailure,
+        heading: 'Danger',
+        message: messages.showFailure,
         variant: 'danger'
       }))
   }, [])
@@ -34,18 +45,12 @@ const Trips = ({ user, alert }) => {
       <Grid item xs={12} sm={6} md={4} lg={3} key={trip._id}>
         <Card>
           <CardActionArea>
-            <CardMedia
-              alt="A random animal picture"
-              height="140"
-              square="true"
-              title="A random dog picture!"
-            />
             <CardContent>
               <Typography variant="h5" component="h2">
                 <Link to={`/trips/${trip._id}`}>{trip.location} </Link>
               </Typography>
               <Typography variant="h6">
-                {moment(trip.startDate).format('MMM Do YYYY')}
+                {moment(trip.startDate).utc().format('MMMM Do YYYY')}
               </Typography>
             </CardContent>
           </CardActionArea>

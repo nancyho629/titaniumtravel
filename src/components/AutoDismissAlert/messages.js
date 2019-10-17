@@ -8,11 +8,7 @@ export default {
   changePasswordFailure: 'Failed to change passwords. Check your old password and try again.',
   deleteFailure: 'Failed to delete!',
   deleteSuccess: 'Successfully deleted!',
-  createFailure: 'Failed to create a new trip!',
-  createSuccess: 'Successfully created a new trip!',
-  getFailure: 'Failed to get all the trips!',
-  getSuccess: 'Successfully got all the trips!',
-  showFailure: 'Failed to get the trip!',
-  updateSuccess: 'Successfully updated the trip!',
-  getActivitiesFailure: 'Failed to get all the activities!'
+  createFailure: 'Create failed!',
+  createSuccess: 'Create successful!',
+  showFailure: 'Show failed!'
 }
