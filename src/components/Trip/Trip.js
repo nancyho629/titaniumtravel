@@ -4,9 +4,10 @@ import apiUrl from '../../apiConfig'
 import { Redirect, withRouter, Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import messages from '../AutoDismissAlert/messages'
+import { Card, Grid, CardContent, Typography } from '@material-ui/core'
+const moment = require('moment')
 
 const Trip = ({ user, alert, match }) => {
-  console.log(match)
   const [trip, setTrip] = useState(null)
   const [deleted, setDeleted] = useState(false)
   // only rerun this if there's this dependency. if you don't include [] it will keep running and rerunning
@@ -48,20 +49,54 @@ const Trip = ({ user, alert, match }) => {
   if (!trip) {
     return <p> Loading... </p>
   }
-
   if (deleted) {
     return <Redirect to={
       { pathname: '/trips', state: { msg: 'Trip successfully deleted' } }
     } />
   }
+
+  // const activitiesJsx = trip.activities.map(activity => (
+  //   <li key={activity._id}>
+  //     <Link to={`/activities/${activity._id}`}>{activity.activity}</Link>
+  //   </li>
+  // ))
+
+  const container = {
+    padding: 24
+  }
+
+  const activityList = trip.activities.map(activity => {
+    return (
+      <Grid item xs={12} sm={6} md={4} lg={3} key={activity._id}>
+        <Card>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              <Link to={`/trips/${match.params.id}/activities/${activity._id}`}>{activity.activity} </Link>
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+    )
+  })
+
   return (
     <div>
       <h1>Trip</h1>
-      <h4>{trip.location}</h4>
-      <h4>{trip.description}</h4>
-      <Link to="/trips">Back to all trips</Link>
+      <h2>{trip.location}</h2>
+      <h3>{trip.description}</h3>
+      <h4>{moment(trip.startDate).format('MMM Do YYYY')} - {moment(trip.endDate).format('MMM Do YYYY')}</h4>
+      <Button href={'#/trips/'}>Back to all trips</Button>
       <Button href={`#/trips/${match.params.id}/edit`} >Edit this trip</Button>
       <Button onClick={destroy}>Delete Trip</Button>
+      <h2>Activities</h2>
+      <Button href={`#/trips/${match.params.id}/create-activity`}>Add a new activity</Button>
+      <div style={container}>
+        <Grid container spacing={2}>
+          {activityList}
+          <Grid item xs={12} sm={6} md={4} lg={3}>
+          </Grid>
+        </Grid>
+      </div>
     </div>
   )
 }
