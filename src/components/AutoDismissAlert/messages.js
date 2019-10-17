@@ -13,5 +13,6 @@ export default {
   getFailure: 'Failed to get all the trips!',
   getSuccess: 'Successfully got all the trips!',
   showFailure: 'Failed to get the trip!',
-  updateSuccess: 'Successfully updated the trip!'
+  updateSuccess: 'Successfully updated the trip!',
+  getActivitiesFailure: 'Failed to get all the activities!'
 }
