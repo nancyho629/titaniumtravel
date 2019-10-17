@@ -13,6 +13,9 @@ import Trip from '../Trip/Trip'
 import TripCreate from '../Trip/TripCreate'
 import TripEdit from '../Trip/TripEdit'
 import TripHome from '../Trip/TripHome'
+import ActivityCreate from '../Activities/ActivityCreate'
+import ActivityEdit from '../Activities/ActivityEdit'
+import Activity from '../Activities/Activity'
 
 class App extends Component {
   constructor () {
@@ -50,10 +53,10 @@ class App extends Component {
           <Route exact path='/' render={() => (
             <TripHome />
           )} />
-          <Route path='/sign-up' render={() => (
+          <Route exact path='/sign-up' render={() => (
             <SignUp alert={this.alert} setUser={this.setUser} />
           )} />
-          <Route path='/sign-in' render={() => (
+          <Route exact path='/sign-in' render={() => (
             <SignIn alert={this.alert} setUser={this.setUser} />
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
@@ -90,6 +93,39 @@ class App extends Component {
             path='/trips/:id/edit'
             render={() => (
               <TripEdit
+                user={user}
+                alert={this.alert}
+              />
+            )}
+          />
+          <AuthenticatedRoute
+            user={user}
+            exact path='/trips/:id/create-activity'
+            render={(props) => (
+              <ActivityCreate
+                {...props}
+                user={user}
+                alert={this.alert}
+              />
+            )}
+          />
+          <AuthenticatedRoute
+            user={user}
+            exact path='/trips/:id/activities/:aid/edit-activity'
+            render={(props) => (
+              <ActivityEdit
+                {...props}
+                user={user}
+                alert={this.alert}
+              />
+            )}
+          />
+          <AuthenticatedRoute
+            user={user}
+            exact path='/trips/:id/activities/:aid'
+            render={(props) => (
+              <Activity
+                {...props}
                 user={user}
                 alert={this.alert}
               />
