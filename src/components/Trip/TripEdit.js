@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import messages from '../AutoDismissAlert/messages'
 
 const TripEdit = ({ user, alert, match, history }) => {
-  const [trip, setTrip] = useState({ location: '', description: '' })
+  const [trip, setTrip] = useState({ location: '', startDate: '', endDate: '', description: '' })
 
   useEffect(() => {
     axios({
@@ -14,9 +14,22 @@ const TripEdit = ({ user, alert, match, history }) => {
       url: `${apiUrl}/trips/${match.params.id}`,
       headers: {
         'Authorization': `Token token=${user.token}` // `Bearer ${user.token}`
+
       }
     })
-      .then(res => setTrip(res.data.trip))
+      .then(res => {
+        let formattedStartDate = ''
+        let formattedEndDate = ''
+        if (res.data.trip.startDate && res.data.trip.endDate) {
+          const startDateObj = new Date(res.data.trip.startDate)
+          const endDateObj = new Date(res.data.trip.endDate)
+          formattedStartDate = startDateObj.toISOString().substring(0, 10)
+          formattedEndDate = endDateObj.toISOString().substring(0, 10)
+        }
+        setTrip({
+          ...res.data.trip, startDate: formattedStartDate, endDate: formattedEndDate
+        })
+      })
       .catch(console.error)
   }, [])
 
