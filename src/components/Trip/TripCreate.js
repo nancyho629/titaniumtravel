@@ -5,7 +5,7 @@ import TripForm from './TripForm'
 import { Redirect } from 'react-router-dom'
 
 const TripCreate = ({ user, alert }) => {
-  const [trip, setTrip] = useState({ location: '', description: '' })
+  const [trip, setTrip] = useState({ location: '', startDate: '', endDate: '', description: '' })
   const [created, setCreated] = useState(false)
 
   const handleChange = (event) => {
