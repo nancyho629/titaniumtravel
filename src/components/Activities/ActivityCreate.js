@@ -3,6 +3,7 @@ import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import ActivityForm from './ActivityForm'
 import { Redirect } from 'react-router-dom'
+import messages from '../AutoDismissAlert/messages'
 
 const ActivityCreate = ({ user, match, alert }) => {
   const [activity, setActivity] = useState({ activity: '', date: '', description: '' })
@@ -24,7 +25,11 @@ const ActivityCreate = ({ user, match, alert }) => {
       data: { activity }
     })
       .then(responseData => setCreated(responseData.data.activity._id))
-      .catch(console.error)
+      .catch(() => alert({
+        heading: 'Danger',
+        message: messages.createFailure,
+        variant: 'danger'
+      }))
   }
 
   if (created) {

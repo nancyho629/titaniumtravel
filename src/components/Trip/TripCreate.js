@@ -3,6 +3,7 @@ import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import TripForm from './TripForm'
 import { Redirect } from 'react-router-dom'
+import messages from '../AutoDismissAlert/messages'
 
 const TripCreate = ({ user, alert }) => {
   const [trip, setTrip] = useState({ location: '', startDate: '', endDate: '', description: '' })
@@ -24,7 +25,11 @@ const TripCreate = ({ user, alert }) => {
       data: { trip }
     })
       .then(responseData => setCreated(responseData.data.trip._id))
-      .catch(console.error)
+      .catch(() => alert({
+        heading: 'Danger',
+        message: messages.createFailure,
+        variant: 'danger'
+      }))
   }
 
   if (created) {

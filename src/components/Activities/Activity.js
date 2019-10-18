@@ -5,12 +5,10 @@ import { Redirect, withRouter } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import messages from '../AutoDismissAlert/messages'
 const moment = require('moment')
-// import Activities from '../Activities/Activities'
 
 const Activity = ({ user, alert, match }) => {
   const [activity, setActivity] = useState(null)
   const [deleted, setDeleted] = useState(false)
-  // console.log('props', match)
   // only rerun this if there's this dependency. if you don't include [] it will keep running and rerunning
   useEffect(() => {
     axios({
@@ -37,12 +35,12 @@ const Activity = ({ user, alert, match }) => {
     })
       .then(() => setDeleted(true))
       .then(() => alert({
-        heading: 'Delete Success',
+        heading: 'Success',
         message: messages.deleteSuccess,
         variant: 'success'
       }))
       .catch(() => alert({
-        heading: 'Delete Failed',
+        heading: 'Danger',
         message: messages.deleteFailure,
         variant: 'danger'
       }))

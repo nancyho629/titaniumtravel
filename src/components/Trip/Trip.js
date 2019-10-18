@@ -20,6 +20,7 @@ const Trip = ({ user, alert, match }) => {
       }
     })
       .then(responseData => setTrip(responseData.data.trip))
+
       .catch(() => alert({
         heading: 'Show Failed',
         message: messages.showFailure,
@@ -36,12 +37,12 @@ const Trip = ({ user, alert, match }) => {
     })
       .then(() => setDeleted(true))
       .then(() => alert({
-        heading: 'Delete Success',
+        heading: 'Success',
         message: messages.deleteSuccess,
         variant: 'success'
       }))
       .catch(() => alert({
-        heading: 'Delete Failed',
+        heading: 'Danger',
         message: messages.deleteFailure,
         variant: 'danger'
       }))
@@ -54,12 +55,6 @@ const Trip = ({ user, alert, match }) => {
       { pathname: '/trips', state: { msg: 'Trip successfully deleted' } }
     } />
   }
-
-  // const activitiesJsx = trip.activities.map(activity => (
-  //   <li key={activity._id}>
-  //     <Link to={`/activities/${activity._id}`}>{activity.activity}</Link>
-  //   </li>
-  // ))
 
   const container = {
     padding: 24
@@ -84,7 +79,7 @@ const Trip = ({ user, alert, match }) => {
       <h1>Trip</h1>
       <h2>{trip.location}</h2>
       <h3>{trip.description}</h3>
-      <h4>{moment(trip.startDate).format('MMM Do YYYY')} - {moment(trip.endDate).format('MMM Do YYYY')}</h4>
+      <h4>{moment(trip.startDate).format('MMMM Do YYYY')} - {moment(trip.endDate).format('MMMM Do YYYY')}</h4>
       <Button href={'#/trips/'}>Back to all trips</Button>
       <Button href={`#/trips/${match.params.id}/edit`} >Edit this trip</Button>
       <Button onClick={destroy}>Delete Trip</Button>
