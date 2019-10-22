@@ -79,7 +79,7 @@ const Trip = ({ user, alert, match }) => {
       <h1>Trip</h1>
       <h2>{trip.location}</h2>
       <h3>{trip.description}</h3>
-      <h4>{moment(trip.startDate).format('MMMM Do YYYY')} - {moment(trip.endDate).format('MMMM Do YYYY')}</h4>
+      <h4>{moment(trip.startDate).utc().format('MMMM Do YYYY')} - {moment(trip.endDate).utc().format('MMMM Do YYYY')}</h4>
       <Button href={'#/trips/'}>Back to all trips</Button>
       <Button href={`#/trips/${match.params.id}/edit`} >Edit this trip</Button>
       <Button onClick={destroy}>Delete Trip</Button>
