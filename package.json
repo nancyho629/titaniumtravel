@@ -15,6 +15,7 @@
     "dotenv-expand": "4.2.0",
     "fs-extra": "3.0.1",
     "google-map-react": "^1.1.5",
+    "load-google-maps-api": "^2.0.1",
     "moment": "^2.24.0",
     "object-assign": "4.1.1",
     "promise": "8.0.1",
