@@ -5,6 +5,7 @@ import { Redirect, withRouter, Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import messages from '../AutoDismissAlert/messages'
 import { Card, Grid, CardContent, Typography } from '@material-ui/core'
+import MyMap from '../Map/MyMap'
 const moment = require('moment')
 
 const Trip = ({ user, alert, match }) => {
@@ -92,6 +93,9 @@ const Trip = ({ user, alert, match }) => {
           </Grid>
         </Grid>
       </div>
+      <MyMap
+        trip={trip}
+      />
     </div>
   )
 }
